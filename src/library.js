@@ -21,22 +21,30 @@ function addBook(library, book) {
 };
 
 function checkoutBook(library, title, genre) {
-
+var stockMessage = `Sorry, there are currently no copies of ${title} available at the ${library.name}.`
   for (var i = 0; i < library.shelves[genre].length; i++) {
-    console.log(library.shelves[genre])
     if (library.shelves[genre][i].title === title) {
-      console.log(`You have now checked out ${title} from the ${library.name}.`)
+      stockMessage = `You have now checked out ${title} from the ${library.name}.`
       library.shelves[genre].splice(i, 1);
-    } else {
-      console.log(`Sorry, there are currently no copies of ${title} availible at the ${library}.`)
-    }
+    } 
   }  
-  return 
+  return stockMessage
+};
+
+function takeStock(library, genre) {
+  var libraryStockMessage = `There are a total of ${library.shelves[genre].length} ${genre} books at the ${library.name}.`;
+  var totalBookCount = 0
+  for (var i = 0; i < Object.keys(library.shelves).length; i++) {
+    if (genre) {
+      libraryStockMessage = `There are a total of ${Object.keys(library.shelves).length} at the ${library}.`
+    }
+  }
+  return libraryStockMessage
 };
 
 module.exports = {
   createLibrary,
   addBook,
   checkoutBook,
-  // takeStock
+  takeStock
 };
